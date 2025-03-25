@@ -1,0 +1,122 @@
+<html>
+<head>
+    <title>HW2</title>
+    <style>
+        body{
+            background-color:#f0f8ff;
+        }
+        h1{
+            text-align:center;
+        }
+        .form-container{
+            max-width:600px;
+            margin: 0 auto;
+            background-color:#ffffff;
+            padding:20px;
+            border-radius:8px;
+        }
+        .question{
+            margin-bottom:15px;
+        }
+        label{
+            font-size:16px;
+            margin-right:10px;
+        }
+        .result{
+            margin-top:20px;
+            padding:10px;
+            background-color:#f0f8ff;
+            border-radius:8px;
+            text-align:center;
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <h1>游泳檢測問卷</h1>
+    <div class="form-container">
+        <form id="swimForm">
+            <div class="question">
+                <label>1. 你最擅長的游泳姿勢是哪一種？</label><br>
+                <input type="checkbox" name="question1" value="1"> 自由式
+                <input type="checkbox" name="question1" value="2"> 仰式
+                <input type="checkbox" name="question1" value="3"> 蛙式
+                <input type="checkbox" name="question1" value="4"> 蝶式
+            </div>
+
+            <div class="question">
+                <label>2. 你能夠在水中持續游泳多久？</label><br>
+                <input type="radio" name="question2" value="0"> 1分鐘以內
+                <input type="radio" name="question2" value="1"> 1至5分鐘
+                <input type="radio" name="question2" value="2"> 5至10分鐘
+                <input type="radio" name="question2" value="3"> 超過10分鐘
+            </div>
+
+            <div class="question">
+                <label>3. 當你游泳時，會感到害怕或不安嗎？</label><br>
+                <input type="radio" name="question3" value="3"> 從不
+                <input type="radio" name="question3" value="2"> 偶爾
+                <input type="radio" name="question3" value="1"> 經常
+                <input type="radio" name="question3" value="0"> 每次都會
+            </div>
+
+            <div class="question">
+                <label>4. 你對自己的游泳技術滿意嗎？</label><br>
+                <input type="radio" name="question4" value="3"> 非常滿意
+                <input type="radio" name="question4" value="2"> 一般
+                <input type="radio" name="question4" value="1"> 不滿意
+                <input type="radio" name="question4" value="0"> 完全不滿意
+            </div>
+
+            <div class="question">
+                <label>5. 你多久會進行一次游泳訓練或休閒游泳？</label><br>
+                <input type="radio" name="question5" value="3"> 每週多次
+                <input type="radio" name="question5" value="2"> 每週一次
+                <input type="radio" name="question5" value="1"> 每月一次
+                <input type="radio" name="question5" value="0"> 很少或從不
+            </div>
+
+            <button type="button" onclick="calculateResult()">提交</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script language="javascript">
+        function calculateResult(){
+            totalScore=0;
+            form=document.getElementById('swimForm');
+            for (i=1;i<=5;i++){
+                let selectedOptions=form.querySelectorAll(`input[name="question${i}"]:checked`);                
+                selectedOptions.forEach(option => {
+                    totalScore += parseInt(option.value);
+                });
+            }
+
+            resultText='';
+	    resultImage = ''; 
+            if (totalScore>=17){
+                resultText="你是游泳菁英! 你超猛!!!";
+		resultImage="菁英.jpg";
+            } 
+            else if(totalScore>=12){
+                resultText="你是游泳高手! 保持努力!!!";
+		resultImage="高手.jpg";
+            } 
+            else if(totalScore<12 && totalScore>=8){
+                resultText="你是游泳初學者! 要多多練習喔!!!";
+		resultImage="初學者.jpg";
+            }
+            else{
+                resultText="你是游泳新手! 大家一起加油!!!";
+		resultImage="新手.jpg";
+
+            }
+
+            resultElement=document.getElementById('result');
+            resultElement.style.display='block';
+    	    resultElement.innerHTML = '<img src="' + resultImage + '" height="300" width="300"> <br>' + '總分：' + totalScore + '<br>' + resultText + '<br>';
+        }
+    </script>
+</body>
+</html>
+
